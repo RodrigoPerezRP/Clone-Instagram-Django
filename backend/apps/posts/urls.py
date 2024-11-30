@@ -10,7 +10,7 @@ from .views import (
 
 
 urlpatterns = [
-    path('list/', ListPosts.as_view()),
+    path('', ListPosts.as_view()),
     path('create/', CreatePost.as_view()),
     path('get/<str:slug>/', GetPost.as_view()),    
     path('edit/<str:slug>/', EditPost.as_view()),    

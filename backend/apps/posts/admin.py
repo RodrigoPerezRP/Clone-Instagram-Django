@@ -4,9 +4,9 @@ from .models import (
 )
 
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('titulo', 'fecha_creacion', 'idUsuario')  
+    list_display = ('titulo', 'fecha_creacion', 'user')  
     search_fields = ('titulo', 'descripcion')  
-    list_filter = ('fecha_creacion', 'idUsuario') 
+    list_filter = ('fecha_creacion', 'user') 
     prepopulated_fields = {'slug': ('titulo',)}  
     ordering = ('-fecha_creacion',)  
 

@@ -10,5 +10,5 @@ urlpatterns = [
 
 
     path('admin/', admin.site.urls),
-    path('posts/', include('apps.posts.urls')),
+    path('api/posts/', include('apps.posts.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

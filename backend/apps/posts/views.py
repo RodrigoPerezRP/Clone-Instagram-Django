@@ -3,7 +3,7 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
-from datetime import date
+
 
 from .serializer import (
     PostSerializer,
@@ -28,7 +28,10 @@ class GetPost(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     
-class CreatePost(APIView, IsAuthenticated):
+class CreatePost(APIView):
+
+    permission_classes = [IsAuthenticated]
+
     def post(self,request,*args,**kwargs):
 
         if request.method == "POST":
@@ -37,9 +40,8 @@ class CreatePost(APIView, IsAuthenticated):
 
                 'titulo': request.data.get('titulo'),
                 'descripcion': request.data.get('descripcion'),
-                'fecha_creacion': request.data.get('fecha_creacion'),
                 'imagen': request.data.get('imagen'),
-                'idUsuario': request.data.get('idUsuario')
+                'user': request.data.get('user')
 
             }
 
@@ -52,7 +54,9 @@ class CreatePost(APIView, IsAuthenticated):
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
-class EditPost(APIView, IsAuthenticated):
+class EditPost(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def put(self,slug,request,*args,**kwargs):
         post = get_object_or_404(Post,slug=slug)
@@ -65,7 +69,9 @@ class EditPost(APIView, IsAuthenticated):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class DeletePost(APIView, IsAuthenticated):
+class DeletePost(APIView):
+
+    permission_classes = [IsAuthenticated]
 
     def delete(self,slug,request,*args,**kwargs):
         post = get_object_or_404(Post, slug=slug)
