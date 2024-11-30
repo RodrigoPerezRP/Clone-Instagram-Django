@@ -3,6 +3,8 @@ from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+from django.utils import timezone
+from django.utils.text import slugify
 
 
 from .serializer import (
@@ -34,6 +36,9 @@ class CreatePost(APIView):
 
     def post(self,request,*args,**kwargs):
 
+        fecha_creacion = timezone.localtime(timezone.now())
+
+
         if request.method == "POST":
             
             data = {
@@ -41,7 +46,9 @@ class CreatePost(APIView):
                 'titulo': request.data.get('titulo'),
                 'descripcion': request.data.get('descripcion'),
                 'imagen': request.data.get('imagen'),
-                'user': request.data.get('user')
+                'user': request.data.get('user'),
+                'slug': slugify(request.data.get('titulo')),
+                'fecha_creacion': fecha_creacion
 
             }
 
