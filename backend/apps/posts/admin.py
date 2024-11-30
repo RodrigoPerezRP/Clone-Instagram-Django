@@ -9,3 +9,5 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('fecha_creacion', 'idUsuario') 
     prepopulated_fields = {'slug': ('titulo',)}  
     ordering = ('-fecha_creacion',)  
+
+admin.site.register(Post, PostAdmin)

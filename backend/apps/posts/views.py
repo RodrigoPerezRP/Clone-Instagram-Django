@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 from datetime import date
 
 from .serializer import (
@@ -27,7 +28,7 @@ class GetPost(APIView):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     
-class CreatePost(APIView):
+class CreatePost(APIView, IsAuthenticated):
     def post(self,request,*args,**kwargs):
 
         if request.method == "POST":
@@ -51,7 +52,7 @@ class CreatePost(APIView):
             else:
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
             
-class EditPost(APIView):
+class EditPost(APIView, IsAuthenticated):
 
     def put(self,slug,request,*args,**kwargs):
         post = get_object_or_404(Post,slug=slug)
@@ -64,7 +65,7 @@ class EditPost(APIView):
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
         
-class DeletePost(APIView):
+class DeletePost(APIView, IsAuthenticated):
 
     def delete(self,slug,request,*args,**kwargs):
         post = get_object_or_404(Post, slug=slug)
